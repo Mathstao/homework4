@@ -117,6 +117,7 @@ class Detector(torch.nn.Module):
             for peak in peaks:
                 peak = peak + (0,0)
             retList.append(peaks)
+        print(retList)
         return retList
 
 
