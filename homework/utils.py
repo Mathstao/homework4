@@ -10,11 +10,13 @@ class DetectionSuperTuxDataset(Dataset):
         self.files = []
         for im_f in glob(path.join(dataset_path, '*_im.jpg')):
             self.files.append(im_f.replace('_im.jpg', ''))
-        self.transform = dense_transforms.Compose([
-                                                                        dense_transforms.RandomHorizontalFlip(0),
-                                                                        dense_transforms.ToTensor(),
-                                                                        # dense_transforms.ToHeatmap(),
-                                                                        ])
+
+        self.transform = transform
+        # self.transform = dense_transforms.Compose([
+        #                                                                 dense_transforms.RandomHorizontalFlip(0),
+        #                                                                 dense_transforms.ToTensor(),
+        #                                                                 # dense_transforms.ToHeatmap(),
+        #                                                                 ])
         self.min_size = min_size
 
     def _filter(self, boxes):
