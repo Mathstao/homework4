@@ -15,7 +15,7 @@ class DetectionSuperTuxDataset(Dataset):
         self.transform = dense_transforms.Compose([
                                                                         dense_transforms.RandomHorizontalFlip(0),
                                                                         dense_transforms.ToTensor(),
-                                                                        # dense_transforms.ToHeatmap(),
+                                                                        dense_transforms.ToHeatmap()
                                                                         ])
         self.min_size = min_size
 
@@ -68,7 +68,7 @@ if __name__ == '__main__':
                                     transform=dense_transforms.Compose([
                                                                         dense_transforms.RandomHorizontalFlip(0),
                                                                         dense_transforms.ToTensor(),
-                                                                        dense_transforms.ToHeatmap(),
+                                                                        # dense_transforms.ToHeatmap(),
                                                                         ]))
     fig.tight_layout()
     # fig.savefig('box.png', bbox_inches='tight', pad_inches=0, transparent=True)
