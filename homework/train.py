@@ -62,6 +62,9 @@ def train(args):
 
         model.eval()
         acc_vals = []
+
+
+
         # for img, label, ec in valid_data:
         #     img, label = img.to(device), label.to(device)
         #     # acc_vals.append(accuracy(model(img), label.long()).detach().cpu().numpy())
@@ -78,9 +81,6 @@ def train(args):
         # if valid_logger is None or train_logger is None:
         #     print('epoch %-3d \t acc = %0.3f \t val acc = %0.3f' % (epoch, avg_acc, avg_vacc))
 
-    save_model(model)
-
-    raise NotImplementedError('train')
     save_model(model)
 
 
