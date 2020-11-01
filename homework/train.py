@@ -25,7 +25,7 @@ def train(args):
 
     optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
     loss = torch.nn.BCEWithLogitsLoss()
-    num_epoch = 1
+    num_epoch = 100
     
     train_data = load_detection_data('dense_data/train')
     valid_data = load_detection_data('dense_data/valid')
@@ -33,6 +33,7 @@ def train(args):
     global_step = 0
     best_vacc = 0
     for epoch in range(num_epoch):
+        print(epoch)
         model.train()
         acc_vals = []
         for img, label, ec in train_data:
@@ -52,7 +53,7 @@ def train(args):
 
             optimizer.zero_grad()
             loss_val.backward()
-            print(loss_val.item())
+            # print(loss_val.item())
             optimizer.step()
             global_step += 1
         # avg_acc = sum(acc_vals) / len(acc_vals)
