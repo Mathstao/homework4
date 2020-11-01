@@ -13,7 +13,8 @@ class DetectionSuperTuxDataset(Dataset):
         self.transform = dense_transforms.Compose([
                                                                         dense_transforms.RandomHorizontalFlip(0),
                                                                         dense_transforms.ToTensor(),
-                                                                        dense_transforms.ToHeatmap(),])
+                                                                        # dense_transforms.ToHeatmap(),
+                                                                        ])
         self.min_size = min_size
 
     def _filter(self, boxes):
