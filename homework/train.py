@@ -32,10 +32,12 @@ def train(args):
 
     global_step = 0
     best_vacc = 0
+    best_vloss = 1
     for epoch in range(num_epoch):
         print(epoch)
         model.train()
         acc_vals = []
+        loss_vals = []
         for img, label, ec in train_data:
             # img = dense_transforms.ToHeatmap(img)
             # label = dense_transforms.ToHeatmap(label)
@@ -45,6 +47,7 @@ def train(args):
             label = label
             #Maybe float?
             loss_val = loss(logit, label)
+            loss_vals.append(loss_val.item())
             # acc_val = accuracy(logit, label)
 
             if train_logger is not None:
@@ -56,6 +59,11 @@ def train(args):
             # print(loss_val.item())
             optimizer.step()
             global_step += 1
+        avg_loss = sum(loss_vals)/len(loss_vals)
+        if(avg_loss < best_vloss):
+            best_vloss = avg_loss
+            save_model(model)
+
         # avg_acc = sum(acc_vals) / len(acc_vals)
         avg_acc = 0
         
@@ -84,7 +92,7 @@ def train(args):
         # if valid_logger is None or train_logger is None:
         #     print('epoch %-3d \t acc = %0.3f \t val acc = %0.3f' % (epoch, avg_acc, avg_vacc))
 
-    save_model(model)
+    # save_model(model)
 
 
 def log(logger, imgs, gt_det, det, global_step):
