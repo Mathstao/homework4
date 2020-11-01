@@ -109,9 +109,16 @@ class Detector(torch.nn.Module):
                  scalar. Otherwise pytorch might keep a computation graph in the background and your program will run
                  out of memory.
         """
+        retList = []
         outputTensor = self.forward(image)
         outputTensor = torch.mean(outputTensor, 0)
-        print(outputTensor.shape)
+        for i in range(3):
+            peaks = extract_peak(outputTensor[i], max_det=30)
+            for peak in peaks:
+                peak = peaks + (0,0)
+            retList.append(peaks)
+        return retList
+
 
 
 
