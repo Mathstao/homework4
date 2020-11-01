@@ -36,9 +36,9 @@ def train(args):
         model.train()
         acc_vals = []
         for img, label, ec in train_data:
-            img, label = img.to(device), label.to(device)
             img = dense_transforms.ToHeatmap(img)
             label = dense_transforms.ToHeatmap(label)
+            img, label = img.to(device), label.to(device)
 
             logit = model(img)
             label = label
