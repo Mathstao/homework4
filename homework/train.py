@@ -7,7 +7,7 @@ from . import dense_transforms
 import torch.utils.tensorboard as tb
 
 def accuracy(img, label):
-    return (img.max(1)[1] == label).float().mean()
+    return (img == label).float().mean()
 
 def train(args):
     from os import path
