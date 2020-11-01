@@ -111,8 +111,8 @@ class Detector(torch.nn.Module):
         """
         outputTensor = self.forward(image)
         outputTensor = torch.mean(outputTensor, 0)
-        print(outputTensor)
-        
+        print(outputTensor.shape)
+
 
 
 def save_model(model):
