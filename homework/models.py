@@ -115,7 +115,7 @@ class Detector(torch.nn.Module):
         for i in range(3):
             peaks = extract_peak(outputTensor[i], max_det=30)
             for peak in peaks:
-                peak = peaks + (0,0)
+                peak = peak + (0,0)
             retList.append(peaks)
         return retList
 
