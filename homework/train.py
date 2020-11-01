@@ -6,6 +6,8 @@ from .utils import load_detection_data
 from . import dense_transforms
 import torch.utils.tensorboard as tb
 
+# def accuracy(img, label):
+#     return (img.max(1)[1] == label).float().mean()
 
 def train(args):
     from os import path
@@ -18,6 +20,64 @@ def train(args):
     """
     Your code here, modify your HW3 code
     """
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    model = Detector().to(device)
+
+    optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
+    loss = torch.nn.BCEWithLogitsLoss()
+    num_epoch = 25
+    
+    train_data = load_detection_data('dense_data/train')
+    valid_data = load_detection_data('dense_data/valid')
+
+    global_step = 0
+    best_vacc = 0
+    for epoch in range(num_epoch):
+        model.train()
+        acc_vals = []
+        for img, label, ec in train_data:
+            img, label = img.to(device), label.to(device)
+
+            logit = model(img)
+            label = label
+            #Maybe float?
+            loss_val = loss(logit, label)
+            # acc_val = accuracy(logit, label)
+
+            if train_logger is not None:
+                train_logger.add_scalar('loss', loss_val, global_step)
+            # acc_vals.append(acc_val)
+
+            optimizer.zero_grad()
+            loss_val.backward()
+            print(loss_val.item())
+            optimizer.step()
+            global_step += 1
+        avg_acc = sum(acc_vals) / len(acc_vals)
+        
+
+        if train_logger:
+            train_logger.add_scalar('accuracy', avg_acc, global_step)
+
+        model.eval()
+        acc_vals = []
+        for img, label in valid_data:
+            img, label = img.to(device), label.to(device)
+            # acc_vals.append(accuracy(model(img), label.long()).detach().cpu().numpy())
+        avg_vacc = sum(acc_vals) / len(acc_vals)
+        if(avg_vacc > best_vacc):
+            print(global_step, "accuracy", avg_vacc)
+            best_vacc = avg_vacc
+            save_model(model)
+
+        if valid_logger:
+            valid_logger.add_scalar('accuracy', avg_vacc, global_step)
+
+        if valid_logger is None or train_logger is None:
+            print('epoch %-3d \t acc = %0.3f \t val acc = %0.3f' % (epoch, avg_acc, avg_vacc))
+
+    save_model(model)
+
     raise NotImplementedError('train')
     save_model(model)
 

@@ -10,7 +10,10 @@ class DetectionSuperTuxDataset(Dataset):
         self.files = []
         for im_f in glob(path.join(dataset_path, '*_im.jpg')):
             self.files.append(im_f.replace('_im.jpg', ''))
-        self.transform = transform
+        self.transform = dense_transforms.Compose([
+                                                                        dense_transforms.RandomHorizontalFlip(0),
+                                                                        dense_transforms.ToTensor(),
+                                                                        dense_transforms.ToHeatmap(),])
         self.min_size = min_size
 
     def _filter(self, boxes):
@@ -59,8 +62,9 @@ if __name__ == '__main__':
                 patches.Rectangle((k[0] - 0.5, k[1] - 0.5), k[2] - k[0], k[3] - k[1], fc='none', ec='b', lw=2))
         ax.axis('off')
     dataset = DetectionSuperTuxDataset('dense_data/train',
-                                       transform=dense_transforms.Compose([dense_transforms.RandomHorizontalFlip(0),
-                                                                           dense_transforms.ToTensor()]))
+                                    transform=dense_transforms.Compose([dense_transforms.ToHeatmap(),
+                                                                        dense_transforms.RandomHorizontalFlip(0),
+                                                                        dense_transforms.ToTensor()]))
     fig.tight_layout()
     # fig.savefig('box.png', bbox_inches='tight', pad_inches=0, transparent=True)
 
