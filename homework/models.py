@@ -109,7 +109,8 @@ class Detector(torch.nn.Module):
                  scalar. Otherwise pytorch might keep a computation graph in the background and your program will run
                  out of memory.
         """
-        raise NotImplementedError('Detector.detect')
+        outputTensor = forward(image)
+        outputTensor = torch.mean(outputTensor, 0)
 
 
 def save_model(model):
