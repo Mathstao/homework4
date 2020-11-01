@@ -37,6 +37,7 @@ class DetectionSuperTuxDataset(Dataset):
 def load_detection_data(dataset_path, num_workers=0, batch_size=32, **kwargs):
     t = dense_transforms.Compose([
                                                                         dense_transforms.RandomHorizontalFlip(0),
+                                                                        dense_transforms.ColorJitter(),
                                                                         dense_transforms.ToTensor(),
                                                                         dense_transforms.ToHeatmap()
                                                                         ])
@@ -69,7 +70,6 @@ if __name__ == '__main__':
                                     transform=dense_transforms.Compose([
                                                                         dense_transforms.RandomHorizontalFlip(0),
                                                                         dense_transforms.ToTensor(),
-                                                                        # dense_transforms.ToHeatmap(),
                                                                         ]))
     fig.tight_layout()
     # fig.savefig('box.png', bbox_inches='tight', pad_inches=0, transparent=True)
