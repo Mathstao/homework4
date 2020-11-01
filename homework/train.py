@@ -61,6 +61,7 @@ def train(args):
             global_step += 1
         avg_loss = sum(loss_vals)/len(loss_vals)
         if(avg_loss < best_vloss):
+            print("saving!")
             best_vloss = avg_loss
             save_model(model)
 
