@@ -25,7 +25,7 @@ def train(args):
 
     optimizer = torch.optim.Adam(model.parameters(), lr = 0.01)
     loss = torch.nn.BCEWithLogitsLoss()
-    num_epoch = 40
+    num_epoch = 50
     
     train_data = load_detection_data('dense_data/train')
     valid_data = load_detection_data('dense_data/valid')
