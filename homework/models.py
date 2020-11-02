@@ -111,7 +111,9 @@ class Detector(torch.nn.Module):
         """
         retList = []
         outputTensor = self.forward(image)
-        outputTensor = torch.mean(outputTensor, 0)
+        outputTensor = outputTensor[0]
+        # 1,3,96,120
+        # outputTensor = torch.mean(outputTensor, 0)
         for i in range(3):
             peaksList = []
             peaks = extract_peak(outputTensor[i], max_det=30)

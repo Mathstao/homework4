@@ -36,8 +36,8 @@ class DetectionSuperTuxDataset(Dataset):
 
 def load_detection_data(dataset_path, num_workers=0, batch_size=32, **kwargs):
     t = dense_transforms.Compose([
-                                                                        dense_transforms.RandomHorizontalFlip(0),
-                                                                        dense_transforms.ColorJitter(),
+                                                                        dense_transforms.RandomHorizontalFlip(0.5),
+                                                                        dense_transforms.ColorJitter(0.9, 0.9, 0.9, 0.1),
                                                                         dense_transforms.ToTensor(),
                                                                         dense_transforms.ToHeatmap()
                                                                         ])

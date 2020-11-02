@@ -23,9 +23,9 @@ def train(args):
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     model = Detector().to(device)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
+    optimizer = torch.optim.Adam(model.parameters(), lr = 0.01)
     loss = torch.nn.BCEWithLogitsLoss()
-    num_epoch = 250
+    num_epoch = 40
     
     train_data = load_detection_data('dense_data/train')
     valid_data = load_detection_data('dense_data/valid')
